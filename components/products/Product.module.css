@@ -1,0 +1,43 @@
+.product_container{
+  border: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  width: 12rem;
+  padding: 0.5rem 1rem;
+
+}
+.product_container:hover{
+  box-shadow: 0 3px 16px 0 rgb(0 0 0 / 11%);
+}
+.product_top{
+   width:10rem;
+   height: 10rem;
+   margin: auto;
+
+}
+.product_top>img{
+  width: 100%;
+  height: 100%;
+}
+
+.productinfo_row{
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  font-size: 1.2rem;
+}
+.additional_price{
+  text-decoration: line-through;
+  color: #858282;
+}
+.product_cta{
+  padding: 5px 0;
+}
+
+
+@media (max-width:480px){
+  .product_container{
+    width: 16rem;
+    margin: auto;
+  }
+}
