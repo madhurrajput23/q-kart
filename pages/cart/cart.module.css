@@ -1,0 +1,53 @@
+.cart_page{
+display: flex;
+  
+  width: 100%;
+}
+.cartlist{
+    flex-basis: 60%;
+}
+
+.cartBillContainer{
+    flex-basis: 40%;
+    max-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cartBill{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid red; */
+    background-color: #ecfdf5;
+    width: 30%;
+    font-size: 1.4rem;
+    padding: 0 1.2rem;
+    
+}
+.cartBill_info{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.4rem;
+}
+.cartBill_infoRow{
+    display: flex;
+    justify-content: space-between;
+}
+.cartBillContainer h4{
+    text-align: center;
+}
+
+@media (max-width:720px){
+    .cart_page{
+     flex-direction: column;
+     gap: 1.5rem;
+    }
+    .cartBill{
+        position: static;
+        width: 100%;
+    }
+  }

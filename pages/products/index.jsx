@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Product from "../../components/products/Product";
-import style from "./products.module.css";
+import styles from "./products.module.css";
 
 const products = () => {
   const [productsList, setProductsList] = useState([]);
@@ -19,7 +19,7 @@ const products = () => {
   }, []);
 
   return (
-    <div className={style.products_list}>
+    <div className={styles.products_list}>
       {productsList?.map((product) => (
         <Product
           key={product.id}
