@@ -1,9 +1,11 @@
 .product_container{
-  border: 1px solid #f0f0f0;
+  border: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   width: 12rem;
   padding: 0.5rem 1rem;
+  border-radius: 5px;
 
 }
 .product_container:hover{
@@ -12,7 +14,7 @@
 .product_top{
    width:10rem;
    height: 10rem;
-   margin: auto;
+   margin: 0 auto;
 
 }
 .product_top>img{
@@ -20,11 +22,18 @@
   height: 100%;
 }
 
+.product_bottom{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 50%;
+}
+
 .productinfo_row{
   display: flex;
-  gap: 4px;
+  gap: 6px;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 .additional_price{
   text-decoration: line-through;
@@ -32,6 +41,12 @@
 }
 .product_cta{
   padding: 5px 0;
+}
+
+.product_unavailable{
+  font-size: 2rem;
+  color: red;
+  margin: auto;
 }
 
 
