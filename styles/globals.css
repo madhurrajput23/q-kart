@@ -57,8 +57,7 @@ body{
 
 }
 .primaryOutline_button:hover{
-  background-color: #38bdf8;
-  color: white;
+  background-color: #eff6ff;
   scale: 1.1;
 
 }
