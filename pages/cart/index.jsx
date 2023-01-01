@@ -1,80 +1,68 @@
 import React from "react";
+import CartEmpty from "../../components/cart/CartEmpty";
 import CartItem from "../../components/cart/CartItem";
+import { useProduct } from "../../contexts/product-context";
 import styles from "./cart.module.css";
 
 const Cart = () => {
-  return (
+  const { productList } = useProduct();
+  const cartList = productList.filter((product) => product.cartCount > 0);
+
+  const totalQuantity = cartList?.reduce((acc, val) => {
+    return val.cartCount + acc;
+  }, 0);
+
+  const itemsPrice = cartList?.reduce((acc, val) => {
+    return val.actualPrice * val.cartCount + acc;
+  }, 0);
+
+  const totalAmount = itemsPrice > 499 ? itemsPrice : itemsPrice + 50;
+
+  return cartList.length ? (
     <div className={styles.cart_page}>
       <div className={styles.cartlist}>
-        <CartItem
-          key={78687}
-          imgSrc={"https://i.dummyjson.com/data/products/1/thumbnail.jpg"}
-          title={"title"}
-          description={"this is description"}
-          actualPrice={400}
-          discountPercentage={20}
-          rating={5}
-          inStock={true}
-        />
-        <CartItem
-          key={78687}
-          imgSrc={"https://i.dummyjson.com/data/products/1/thumbnail.jpg"}
-          title={"title"}
-          description={"this is description"}
-          actualPrice={400}
-          discountPercentage={20}
-          rating={5}
-          inStock={true}
-        />
-        <CartItem
-          key={78687}
-          imgSrc={"https://i.dummyjson.com/data/products/1/thumbnail.jpg"}
-          title={"title"}
-          description={"this is description"}
-          actualPrice={400}
-          discountPercentage={20}
-          rating={5}
-          inStock={true}
-        />
-        <CartItem
-          key={78687}
-          imgSrc={"https://i.dummyjson.com/data/products/1/thumbnail.jpg"}
-          title={"title"}
-          description={"this is description"}
-          actualPrice={400}
-          discountPercentage={20}
-          rating={5}
-          inStock={true}
-        />
+        {cartList?.map((product) => (
+          <CartItem key={product.id} {...product} />
+        ))}
       </div>
       <div className={styles.cartBillContainer}>
         <div className={styles.cartBill}>
           <h4>PRICE DETAILS</h4>
           <div className={styles.cartBill_info}>
             <div className={styles.cartBill_infoRow}>
-              <div>Price{"(3items)"}</div>
-              <div>{1000}</div>
+              <div>Total Quantity</div>
+              <div>{totalQuantity}</div>
             </div>
             <div className={styles.cartBill_infoRow}>
-              <div>Total Items</div>
-              <div>{3}</div>
+              <div>Price ({cartList.length} items)</div>
+              <div>{itemsPrice}</div>
             </div>
             <div className={styles.cartBill_infoRow}>
               <div>Delivery Charge</div>
-              <div className={styles.cartBill_free}>Free</div>
+              <div className={styles.cartBill_free}>
+                {itemsPrice > 499 ? (
+                  <>
+                    <del className="color_red">Rs 50</del>{" "}
+                    <ins className="color_green">Free</ins>
+                  </>
+                ) : (
+                  <div>Rs 50</div>
+                )}
+              </div>
             </div>
             <div className={styles.cartBill_infoRow}>
               <div className={styles.cartBill_total}>Total Amount</div>
-              <div>{4000}</div>
+              <div>{totalAmount}</div>
             </div>
           </div>
           <div className={styles.placeOrder}>
-          <button className="primary_button">Confirm Order</button>
+            <button className="primary_button">Confirm Order</button>
+          </div>
         </div>
-        </div>
-       
       </div>
     </div>
+  ) : (
+    <CartEmpty />
   );
 };
 

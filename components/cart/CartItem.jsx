@@ -1,7 +1,10 @@
 import React from "react";
+import { useProduct } from "../../contexts/product-context";
+import { updateCartCount } from "../../utils";
 import styles from "./CartItem.module.css";
 
 const CartItem = ({
+  id,
   imgSrc,
   title,
   description,
@@ -9,8 +12,17 @@ const CartItem = ({
   rating,
   discountPercentage,
   inStock,
+  inWishlist,
+  cartCount,
 }) => {
   const additionalPrice = (actualPrice * 100) / (100 - discountPercentage);
+  const { productList, updateProductList } = useProduct();
+
+  const handleCartCount = (id, count) => {
+    const updatedProductList = updateCartCount(productList, id, count);
+    updateProductList(updatedProductList);
+  };
+
   return (
     <div className={styles.cartItem_container}>
       <div className={styles.cartItem_top}>
@@ -41,11 +53,32 @@ const CartItem = ({
           </div>
           <div className={styles.cartItem_cta}>
             <div className={styles.cartItem_ctaCount}>
-            <button className="primary_button">-</button>
-            <span>0</span>
-            <button className="primary_button">+</button>
+              <button
+                className="primary_button"
+                onClick={() => {
+                  handleCartCount(id, cartCount - 1);
+                }}
+              >
+                -
+              </button>
+              <span>{cartCount}</span>
+              <button
+                className="primary_button"
+                onClick={() => {
+                  handleCartCount(id, cartCount + 1);
+                }}
+              >
+                +
+              </button>
             </div>
-            <button className="primary_button">Remove</button>
+            <button
+              className="primary_button"
+              onClick={() => {
+                handleCartCount(id, 0);
+              }}
+            >
+              Remove
+            </button>
           </div>
         </div>
       ) : (

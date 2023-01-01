@@ -1,15 +1,29 @@
+import { useRouter } from "next/router";
 import React from "react";
+import { useProduct } from "../../contexts/product-context";
+import { updateCartCount } from "../../utils";
 import styles from "./Product.module.css";
 
 const Product = ({
+  id,
   imgSrc,
   title,
   actualPrice,
   rating,
   discountPercentage,
   inStock,
+  inWishlist,
+  cartCount,
 }) => {
+  const router = useRouter();
   const additionalPrice = (actualPrice * 100) / (100 - discountPercentage);
+  const { productList, updateProductList } = useProduct();
+
+  const addToCartHandler = (id) => {
+    const updatedProductList = updateCartCount(productList, id, 1);
+    updateProductList(updatedProductList);
+  };
+
   return (
     <div className={styles.product_container}>
       <div className={styles.product_top}>
@@ -38,7 +52,18 @@ const Product = ({
             </div>
           </div>
           <div className={styles.product_cta}>
-            <button className="primary_button">Add to Cart</button>
+            <button
+              className={cartCount ? "primaryOutline_button" : "primary_button"}
+              onClick={() => {
+                if (cartCount) {
+                  router.push("/cart");
+                } else {
+                  addToCartHandler(id);
+                }
+              }}
+            >
+              {cartCount ? "Already in Cart" : "Add to Cart"}
+            </button>
           </div>
         </div>
       ) : (
