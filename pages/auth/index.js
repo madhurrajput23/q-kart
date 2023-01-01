@@ -2,9 +2,9 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useAuth } from "../../contexts/auth-context";
-import styles from "./login.module.css";
+import styles from "./auth.module.css";
 
-const Login = () => {
+const Auth = () => {
   const { isLogin, setIsLogin } = useAuth();
   const router = useRouter();
   const [username, setUsername] = useState();
@@ -12,48 +12,53 @@ const Login = () => {
 
   console.log({ isLogin });
 
-  const loginHandler = (event) => {
-    event.preventDefault();
-    fetch("https://dummyjson.com/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+  const postLoginForm = async (username, password) => {
+    try {
+      const res = await axios.post("https://dummyjson.com/auth/login", {
         username: username,
         password: password,
         // expiresInMins: 60, // optional
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setIsLogin(true);
-      })
-      .catch((e) => {
-        setIsLogin(false);
       });
+      setIsLogin(true);
+      localStorage?.setItem(
+        "login",
+        JSON.stringify({
+          isUserLoggedIn: true,
+        })
+      );
+      router.push("/products");
+    } catch (error) {
+      setIsLogin(false);
+    }
+  };
+
+  const loginHandler = (event) => {
+    event.preventDefault();
+    postLoginForm(username, password);
   };
 
   const guestLoginHandler = (event) => {
     event.preventDefault();
-    fetch("https://dummyjson.com/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: "kminchelle",
-        password: "0lelplR",
-        // expiresInMins: 60, // optional
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setIsLogin(true);
-      })
-      .catch((e) => {
-        setIsLogin(false);
-      });
+    postLoginForm("kminchelle", "0lelplR");
+  };
+
+  const logoutHandler = () => {
+    localStorage?.removeItem("login");
+    setIsLogin(false);
   };
 
   if (isLogin) {
-    router.push("/products");
+    return (
+      <div className={styles.logout_Box}>
+        <h2>Are you sure ?</h2>
+        <div className={styles.logout_Buttons}>
+          <button className="primaryOutline_button">Go Back</button>
+          <button className="primary_button" onClick={logoutHandler}>
+            Log Out
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -90,4 +95,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Auth;

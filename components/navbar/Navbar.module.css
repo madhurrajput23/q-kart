@@ -14,7 +14,7 @@
     align-items: center;
   }
 
-  .brandName{
+  .brandName>a{
     font-size: 1.8rem;
     font-weight: bold;
   }
@@ -27,7 +27,7 @@
   }
   
   .navbar__menuItem:hover {
-    color: #ccc;
+    scale: 1.1;
   }
   
   @media (max-width: 768px) {
