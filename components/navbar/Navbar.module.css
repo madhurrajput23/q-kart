@@ -1,0 +1,42 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 64px;
+    background-color: var(--color-primary);
+    color: #fff;
+    padding: 0 32px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .navbar__menu {
+    display: flex;
+    align-items: center;
+  }
+
+  .brandName{
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  
+  .navbar__menuItem {
+    margin-left: 16px;
+    font-size: 1.2rem;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .navbar__menuItem:hover {
+    color: #ccc;
+  }
+  
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 0 16px;
+    }
+
+  }
+  
+  
+  
+  
