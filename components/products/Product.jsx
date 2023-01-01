@@ -42,10 +42,10 @@ const Product = ({
           </div>
         </div>
       ) : (
-        <>
+        <div className={styles.product_bottom}>
           <h3 className={styles.product_title}>{title}</h3>
           <div className={styles.product_unavailable}>Out of stock</div>
-        </>
+        </div>
       )}
     </div>
   );
