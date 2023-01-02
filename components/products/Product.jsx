@@ -1,11 +1,14 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useAuth } from "../../contexts/auth-context";
 import { useProduct } from "../../contexts/product-context";
 import { toggleWishlist, updateCartCount } from "../../utils";
 import styles from "./Product.module.css";
 
+
 const Product = ({
+ 
   id,
   imgSrc,
   title,
@@ -15,8 +18,10 @@ const Product = ({
   inStock,
   inWishlist,
   cartCount,
+
 }) => {
   const router = useRouter();
+  const { isLogin } = useAuth();
   const additionalPrice = (actualPrice * 100) / (100 - discountPercentage);
   const { productList, updateProductList } = useProduct();
 
@@ -37,7 +42,12 @@ const Product = ({
       <div className={styles.product_top}>
         <img src={imgSrc} />
         <div className={styles.wishlist_Icon} onClick={() =>{
-          wishlistHandler(id)
+          if(isLogin){
+            wishlistHandler(id)
+          }else{
+            router.push("./auth");
+          }
+          
         }}>
           {inWishlist ? <FaHeart /> : <FaRegHeart />}
         </div>
@@ -70,8 +80,10 @@ const Product = ({
               onClick={() => {
                 if (cartCount) {
                   router.push("/cart");
-                } else {
+                } else if(isLogin){
                   addToCartHandler(id);
+                }else{
+                  router.push("/auth");
                 }
               }}
             >

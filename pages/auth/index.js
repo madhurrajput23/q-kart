@@ -45,7 +45,9 @@ const Auth = () => {
   const logoutHandler = () => {
     localStorage?.removeItem("login");
     setIsLogin(false);
+    localStorage?.removeItem("products")
   };
+
 
   if (isLogin) {
     return (

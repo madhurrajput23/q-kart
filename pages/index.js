@@ -6,5 +6,5 @@ export default function Home() {
   useEffect(() => {
     router.push("/products");
   }, [router.isReady]);
-  return <div>home</div>;
+  return <h1 className="loading">Loading...</h1>;
 }
