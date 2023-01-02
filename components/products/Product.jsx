@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useProduct } from "../../contexts/product-context";
-import { updateCartCount } from "../../utils";
+import { toggleWishlist, updateCartCount } from "../../utils";
 import styles from "./Product.module.css";
 
 const Product = ({
@@ -22,12 +23,24 @@ const Product = ({
   const addToCartHandler = (id) => {
     const updatedProductList = updateCartCount(productList, id, 1);
     updateProductList(updatedProductList);
+
+  };
+
+  const wishlistHandler = (id) =>{
+    const updatedProductList = toggleWishlist(productList , id );
+    updateProductList(updatedProductList);
+
   };
 
   return (
     <div className={styles.product_container}>
       <div className={styles.product_top}>
         <img src={imgSrc} />
+        <div className={styles.wishlist_Icon} onClick={() =>{
+          wishlistHandler(id)
+        }}>
+          {inWishlist ? <FaHeart /> : <FaRegHeart />}
+        </div>
       </div>
       {inStock ? (
         <div className={styles.product_bottom}>
